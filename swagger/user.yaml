@@ -1,0 +1,1606 @@
+swagger: "2.0"
+info:
+  title: Android Admin
+  description: This is my Android Admin Project
+  version: 1.0
+  contact:
+    email: rajbirkhokhar.vision@gmail.com
+  servers:
+    -url: "http://localhost:1000/"
+    description: This is my local server
+
+schemes: [http,https]
+
+securityDefinitions:  
+  JWT:  
+    type: apiKey
+    in: header
+    name: Authorization
+
+tags: [{
+  name: Reg & Login,
+  description: Register & Login API},
+  {name: User APIs,
+  description: User All APIs},
+  {name: ReferenceBy ,
+  description: ReferenceBy All APIs},
+  {name: DeveloperMaster,
+  description: DeveloperMaster All APIs},
+  {name: Admin APIs,
+  description: Admin All APIs}
+  ]
+
+paths:
+ 
+#Register
+  /v1/register:
+    post:
+      tags: [Reg & Login]
+      summary: Register User & Admin
+      parameters:
+      - in: formData
+        name: userProfileImage
+        type: file
+      - in: formData
+        name: name
+        type: string
+      - in: formData
+        name: email
+        type: string
+      - in: formData
+        name: password
+        type: string
+      - in: formData
+        name: number
+        type: string
+      responses:
+        200:
+          description: Success
+
+#Login
+  /v1/login:
+    post:
+      tags: [Reg & Login]
+      summary: Login User & Admin
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Email Code
+  /v1/emailCode:
+    post:
+      tags: [User APIs]
+      summary: Email Code
+      description: Email Code
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Change Password
+  /v1/changePass:
+    post:
+      tags: [User APIs]
+      summary: Change User Password
+      description: Change User Password
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+            code:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#All User
+  /v1/admin/alluser:
+    post:
+      tags: [Admin APIs]
+      security:  
+      - JWT: []
+      summary: Get All User
+      description: Get All User
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+      responses:
+        200:
+          description: Success
+  
+#Get User by id
+  /v1/profile:
+    get:
+      tags: [User APIs]
+      security:  
+      - JWT: []
+      summary: Get User by Id 
+      description: Get User by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Update User
+  /v1/profile/update:
+    post:
+      tags: [User APIs]
+      security:  
+      - JWT: []
+      summary: Update User
+      description: Update User
+      parameters:
+      - in: formData
+        name: userProfileImage
+        type: file
+      - in: formData
+        name: id
+        type: string
+      - in: formData
+        name: name
+        type: string
+      - in: formData
+        name: email
+        type: string
+      - in: formData
+        name: password
+        type: string
+      - in: formData
+        name: isAdmin
+        type: string
+      - in: formData
+        name: number
+        type: string
+      responses:
+        200:
+          description: Success
+
+#Login Permission
+  /v1/isActive/permissionStatus:
+    post:
+      tags: [Admin APIs]
+      security:  
+      - JWT: []
+      summary: Login Permission
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            id:
+              type: string
+            isActive:
+              type: boolean
+      responses:
+        200:
+          description: Success
+
+#Delete ReferenceBy by id
+  /v1/profile/delete:
+    delete:
+      tags: [User APIs]
+      security:  
+      - JWT: []
+      summary: Delete User by Id 
+      description: Delete User by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#ReferenceByRegister
+  /v1/referenceByRegister:
+    post:
+      tags: [ReferenceBy]
+      security:  
+      - JWT: []
+      summary: Register ReferenceBy
+      parameters:
+      - in: formData
+        name: referenceByImage
+        type: file
+      - in: formData
+        name: companyName
+        type: string
+      - in: formData
+        name: email
+        type: string
+      - in: formData
+        name: number
+        type: string
+      responses:
+        200:
+          description: Success
+
+#ReferenceByUpdate
+  /v1/referenceByUpdate:
+    post:
+      tags: [ReferenceBy]
+      security:  
+      - JWT: []
+      summary: Update ReferenceBy
+      parameters:
+      - in: formData
+        name: referenceByImage
+        type: file
+      - in: formData
+        name: companyName
+        type: string
+      - in: formData
+        name: id
+        type: string
+      - in: formData
+        name: email
+        type: string
+      - in: formData
+        name: number
+        type: string
+      responses:
+        200:
+          description: Success
+
+#Get ReferenceBy id
+  /v1/referenceByGet:
+    get:
+      tags: [ReferenceBy]
+      security:  
+      - JWT: []
+      summary: Get User by Id 
+      description: Get User by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Delete ReferenceBy by id
+  /v1/referenceByDelete:
+    delete:
+      tags: [ReferenceBy]
+      security:  
+      - JWT: []
+      summary: Delete referenceBy by Id 
+      description: Delete referenceBy by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#All referenceBy
+  /v1/referenceByGetAll:
+    post:
+      tags: [ReferenceBy]
+      security:  
+      - JWT: []
+      summary: Get All referenceBy
+      description: Get All referenceBy
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#developerMasterRegister
+  /v1/developerMasterRegister:
+    post:
+      tags: [DeveloperMaster]
+      security:  
+      - JWT: []
+      summary: Register DeveloperMaster
+      parameters:
+      - in: formData
+        name: developerMasterImage
+        type: file
+      - in: formData
+        name: developerName
+        type: string
+      - in: formData
+        name: number
+        type: string
+      - in: formData
+        name: technology
+        type: string
+      responses:
+        200:
+          description: Success
+
+#developerMasterUpdate
+  /v1/developerMasterUpdate:
+    post:
+      tags: [DeveloperMaster]
+      security:  
+      - JWT: []
+      summary: Update DeveloperMaster
+      parameters:
+      - in: formData
+        name: id
+        type: string
+      - in: formData
+        name: developerMasterImage
+        type: file
+      - in: formData
+        name: developerName
+        type: string
+      - in: formData
+        name: status
+        type: string
+      - in: formData
+        name: number
+        type: string
+      - in: formData
+        name: technology
+        type: string
+      responses:
+        200:
+          description: Success
+
+#Get developerMaster id
+  /v1/developerMasterGet:
+    get:
+      tags: [DeveloperMaster]
+      security:  
+      - JWT: []
+      summary: Get DeveloperMaster by Id 
+      description: Get DeveloperMaster by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Delete DeveloperMaster by id
+  /v1/developerMasterDelete:
+    delete:
+      tags: [DeveloperMaster]
+      security:  
+      - JWT: []
+      summary: Delete DeveloperMaster by Id 
+      description: Delete DeveloperMaster by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#All DeveloperMaster
+  /v1/developerMasterGetAll:
+    post:
+      tags: [DeveloperMaster]
+      security:  
+      - JWT: []
+      summary: Get All DeveloperMaster
+      description: Get All DeveloperMaster
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#appCategoryRegister
+  /v1/appCategoryRegister:
+    post:
+      tags: [ApplicationCategory]
+      security:  
+      - JWT: []
+      summary: Register DeveloperMaster
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            applicationCategory:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#appCategoryUpdate
+  /v1/appCategoryUpdate:
+    post:
+      tags: [ApplicationCategory]
+      security:  
+      - JWT: []
+      summary: Update DeveloperMaster
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            applicationCategory:
+              type: string
+            id:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Get appCategory id
+  /v1/appCategoryGet:
+    get:
+      tags: [ApplicationCategory]
+      security:  
+      - JWT: []
+      summary: Get appCategory by Id 
+      description: Get appCategory by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Delete appCategory by id
+  /v1/appCategoryDelete:
+    delete:
+      tags: [ApplicationCategory]
+      security:  
+      - JWT: []
+      summary: Delete appCategory by Id 
+      description: Delete appCategory by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#All appCategory
+  /v1/appCategoryGetAll:
+    post:
+      tags: [ApplicationCategory]
+      security:  
+      - JWT: []
+      summary: Get All appCategory
+      description: Get All appCategory
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#PlayConsoleRegister
+  /v1/playConsoleRegister:
+    post:
+      tags: [PlayConsole]
+      security:  
+      - JWT: []
+      summary: Register playConsole
+      parameters:
+      - in: formData
+        name: playConsoleImage
+        type: file
+      - in: formData
+        name: number
+        type: string
+      - in: formData
+        name: email
+        type: string
+      - in: formData
+        name: password
+        type: string
+      - in: formData
+        name: status
+        type: string
+      - in: formData
+        name: url
+        type: string
+      - in: formData
+        name: deviceName
+        type: string
+      - in: formData
+        name: name
+        type: string
+      responses:
+        200:
+          description: Success
+
+#playConsoleUpdate
+  /v1/playConsoleUpdate:
+    post:
+      tags: [PlayConsole]
+      security:  
+      - JWT: []
+      summary: Update playConsole
+      parameters:
+      - in: formData
+        name: id
+        type: string
+      - in: formData
+        name: playConsoleImage
+        type: file
+      - in: formData
+        name: number
+        type: string
+      - in: formData
+        name: email
+        type: string
+      - in: formData
+        name: password
+        type: string
+      - in: formData
+        name: status
+        type: string
+      - in: formData
+        name: url
+        type: string
+      - in: formData
+        name: deviceName
+        type: string
+      - in: formData
+        name: name
+        type: string
+      responses:
+        200:
+          description: Success
+
+#Get playConsole id
+  /v1/playConsoleGet:
+    get:
+      tags: [PlayConsole]
+      security:  
+      - JWT: []
+      summary: Get playConsole by Id 
+      description: Get playConsole by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Delete playConsole by id
+  /v1/playConsoleDelete:
+    delete:
+      tags: [PlayConsole]
+      security:  
+      - JWT: []
+      summary: Delete playConsole by Id 
+      description: Delete playConsole by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#All playConsole
+  /v1/playConsoleGetAll:
+    post:
+      tags: [PlayConsole]
+      security:  
+      - JWT: []
+      summary: Get All playConsole
+      description: Get All playConsole
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+            filter:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Get playConsole id
+  /v1/playConsoleWithStatus:
+    post:
+      tags: [PlayConsole]
+      security:  
+      - JWT: []
+      summary: Get playConsole by Id 
+      description: Get playConsole by Id 
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            id:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#applicationMasterRegister
+  /v1/applicationMasterRegister:
+    post:
+      tags: [ApplicationMaster]
+      security:  
+      - JWT: []
+      summary: Register applicationMaster
+      parameters:
+      - in: formData
+        name: applicationMasterImage
+        type: file
+      - in: formData
+        name: developerMasterId
+        type: string
+      - in: formData
+        name: referenceById
+        type: string
+      - in: formData
+        name: appCategoryId
+        type: string
+      - in: formData
+        name: playConsoleId
+        type: string
+      - in: formData
+        name: email
+        type: string
+      - in: formData
+        name: name
+        type: string
+      - in: formData
+        name: url
+        type: string
+      - in: formData
+        name: txtUrl
+        type: string
+      - in: formData
+        name: status
+        type: string
+      - in: formData
+        name: appVersion
+        type: string
+      - in: formData
+        name: referenceApp
+        type: string
+      - in: formData
+        name: uploadDate
+        type: string
+      - in: formData
+        name: uploadInstallation
+        type: string
+      - in: formData
+        name: addHistory[version]
+        type: string
+      - in: formData
+        name: addHistory[historyInstallation]
+        type: string
+      - in: formData
+        name: addHistory[remark]
+        type: string
+      - in: formData
+        name: addHistory[features]
+        type: string
+      - in: formData
+        name: addHistory[historyDate]
+        type: string
+      responses:
+        200:
+          description: Success
+
+#applicationMasterUpdate
+  /v1/applicationMasterUpdate:
+    post:
+      tags: [ApplicationMaster]
+      security:  
+      - JWT: []
+      summary: Update applicationMaster
+      parameters:
+      - in: formData
+        name: id
+        type: string
+      - in: formData
+        name: reason
+        type: string
+      - in: formData
+        name: applicationMasterImage
+        type: file
+      - in: formData
+        name: developerMasterId
+        type: string
+      - in: formData
+        name: referenceById
+        type: string
+      - in: formData
+        name: appCategoryId
+        type: string
+      - in: formData
+        name: playConsoleId
+        type: string
+      - in: formData
+        name: email
+        type: string
+      - in: formData
+        name: name
+        type: string
+      - in: formData
+        name: url
+        type: string
+      - in: formData
+        name: txtUrl
+        type: string
+      - in: formData
+        name: status
+        type: string
+      - in: formData
+        name: appVersion
+        type: string
+      - in: formData
+        name: referenceApp
+        type: string
+      - in: formData
+        name: uploadDate
+        type: string
+      - in: formData
+        name: uploadInstallation
+        type: string
+      - in: formData
+        name: addHistory[version]
+        type: string
+      - in: formData
+        name: addHistory[historyInstallation]
+        type: string
+      - in: formData
+        name: addHistory[historyDate]
+        type: string
+      - in: formData
+        name: addHistory[remark]
+        type: string
+      - in: formData
+        name: addHistory[features]
+        type: string
+      responses:
+        200:
+          description: Success
+
+#applicationMasterGetAll
+  /v1/applicationMasterGetAll:
+    post:
+      tags: [ApplicationMaster]
+      security:  
+      - JWT: []
+      summary: Get All ApplicationMaster
+      description: Get All ApplicationMaster
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+            playConsoleId:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Get applicationMaster By id
+  /v1/applicationMasterGet:
+    get:
+      tags: [ApplicationMaster]
+      security:  
+      - JWT: []
+      summary: Get applicationMasterGet by Id 
+      description: Get applicationMasterGet by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Delete applicationMaster by id
+  /v1/applicationMasterDelete:
+    delete:
+      tags: [ApplicationMaster]
+      security:  
+      - JWT: []
+      summary: Delete ApplicationMaster by Id 
+      description: Delete ApplicationMaster by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#notificationSetting
+  /v1/notificationSetting:
+    post:
+      tags: [Notification Setting]
+      security:  
+      - JWT: []
+      summary: Create NotificationSetting
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            serverKey:
+              type: string
+            applicationMasterId:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#notificationSetting Get By applicationMasterId
+  /v1/notificationSettingId:
+    get:
+      tags: [Notification Setting]
+      security:  
+      - JWT: []
+      summary: Get Notification Setting
+      description: Get Notification Setting 
+      parameters:
+        - name: applicationMasterId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Send Notification Create
+  /v1/sendNotificationCreate:
+    post:
+      tags: [Notification Setting]
+      security:  
+      - JWT: []
+      summary: Create Notification Setting
+      parameters:
+      - in: formData
+        name: sendNotificationImage
+        type: file
+      - in: formData
+        name: title
+        type: string
+      - in: formData
+        name: message
+        type: string
+      - in: formData
+        name: externalLink
+        type: string
+      - in: formData
+        name: applicationMasterId
+        type: string
+      responses:
+        200:
+          description: Success
+
+#getAllsendNotification
+  /v1/getAllsendNotification:
+    post:
+      tags: [Notification Setting]
+      security:  
+      - JWT: []
+      summary: Get All sendNotification
+      description: Get All sendNotification
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Delete sendNotification by id
+  /v1/sendNotificationDelete:
+    delete:
+      tags: [Notification Setting]
+      security:  
+      - JWT: []
+      summary: Delete Notification Setting by Id 
+      description: Delete Notification Setting by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#userReportCreate
+  /v1/userReportCreate:
+    post:
+      tags: [User Report]
+      security:  
+      - JWT: []
+      summary: Create User Report
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+            applicationMasterId:
+              type: string
+            report:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#getAllUserReport
+  /v1/getAllUserReport:
+    post:
+      tags: [User Report]
+      security:  
+      - JWT: []
+      summary: Get All User Report
+      description: Get All user report
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+            applicationMasterId:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Get User Report By id
+  /v1/userReportGet:
+    get:
+      tags: [User Report]
+      security:  
+      - JWT: []
+      summary: Get User Report by Id 
+      description: Get User Report by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#uploadMediaCategoryCreate
+  /v1/uploadMediaCategoryCreate:
+    post:
+      tags: [Upload Media Category]
+      security:  
+      - JWT: []
+      summary: Create uploadMediaCategory 
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            uploadMediaCategory:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#uploadMediaCategoryGetAll
+  /v1/uploadMediaCategoryGetAll:
+    post:
+      tags: [Upload Media Category]
+      security:  
+      - JWT: []
+      summary: Get All uploadMediaCategory
+      description: Get All uploadMediaCategory
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#uploadMediaCategoryUpdate
+  /v1/uploadMediaCategoryUpdate:
+    post:
+      tags: [Upload Media Category]
+      security:  
+      - JWT: []
+      summary: Update uploadMediaCategory
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            uploadMediaCategory:
+              type: string
+            id:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Delete uploadMediaCategory by id
+  /v1/uploadMediaCategoryDelete:
+    delete:
+      tags: [Upload Media Category]
+      security:  
+      - JWT: []
+      summary: Delete uploadMediaCategory by Id 
+      description: Delete uploadMediaCategory by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Get uploadMediaCategory by id
+  /v1/uploadMediaCategoryId:
+    get:
+      tags: [Upload Media Category]
+      security:  
+      - JWT: []
+      summary: Get uploadMediaCategory by Id 
+      description: Get uploadMediaCategory by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Upload Media Update
+  /v1/uploadMediaUpdate:
+    post:
+      tags: [Upload Media]
+      security:  
+      - JWT: []
+      summary: Update Upload Media Setting
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            content:
+              type: string
+            uploadMediaId:
+              type: string
+            applicationMasterId:
+              type: string
+            uploadMediaCategoryId:
+              type: string
+            uploadMediaImage:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#uploadMediaGetAll
+  /v1/uploadMediaGetAll:
+    post:
+      tags: [Upload Media]
+      security:  
+      - JWT: []
+      summary: Get All Upload Media
+      description: Get All Upload Media
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            uploadMediaCategoryId:
+              type: string
+            applicationMasterId:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Get uploadMedia by id
+  /v1/uploadMediaId:
+    get:
+      tags: [Upload Media]
+      security:  
+      - JWT: []
+      summary: Get Upload Media by Id 
+      description: Get Upload Media by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Delete Upload Media by id
+  /v1/uploadMediaDelete:
+    delete:
+      tags: [Upload Media]
+      security:  
+      - JWT: []
+      summary: Delete Upload Media
+      description: Delete Upload Media
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            uploadMediaId:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#applicationBugCreate
+  /v1/applicationBugCreate:
+    post:
+      tags: [Application Bug]
+      security:  
+      - JWT: []
+      summary: Create ApplicationBug
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            developerMasterId:
+              type: string
+            applicationMasterId:
+              type: string
+            playConsoleId:
+              type: string
+            bug:
+              type: string
+            status:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#applicationBugUpdate
+  /v1/applicationBugUpdate:
+    post:
+      tags: [Application Bug]
+      security:  
+      - JWT: []
+      summary: Create ApplicationBug
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            developerMasterId:
+              type: string
+            applicationMasterId:
+              type: string
+            playConsoleId:
+              type: string
+            bug:
+              type: string
+            status:
+              type: string
+            id:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#Get applicationBug by id
+  /v1/applicationBugId:
+    get:
+      tags: [Application Bug]
+      security:  
+      - JWT: []
+      summary: Get Application Bug by Id 
+      description: Get Application Bug by Id 
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#getAllapplicationBug
+  /v1/getAllapplicationBug:
+    post:
+      tags: [Application Bug]
+      security:  
+      - JWT: []
+      summary: Get All Application Bug
+      description: Get All Application Bug
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#appUpdateSettingCreate
+  /v1/appUpdateSettingCreate:
+    post:
+      tags: [App Update Setting]
+      security:  
+      - JWT: []
+      summary: Create App Update Setting
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            version:
+              type: string
+            description:
+              type: string
+            appLink:
+              type: string
+            appUpdatePopUp:
+              type: boolean
+            cancel:
+              type: boolean
+            applicationMasterId:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#appUpdateSetting Get By applicationMasterId
+  /v1/appUpdateSettingId:
+    get:
+      tags: [App Update Setting]
+      security:  
+      - JWT: []
+      summary: Get App Update Setting by Id 
+      description: Get App Update Setting by Id 
+      parameters:
+        - name: applicationMasterId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#Upload Media Create
+  /v1/uploadMediaCreate:
+    post:
+      tags: [Upload Media]
+      security:  
+      - JWT: []
+      summary: Create Upload Media Setting
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/UploadMediaCreateRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+
+#addField
+  /v1/addField:
+    post:
+      tags: [AddField]
+      security:  
+      - JWT: []
+      summary: Register DeveloperMaster
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#getAddField
+  /v1/getAddField:
+    post:
+      tags: [AddField]
+      security:  
+      - JWT: []
+      summary: Get All AddField
+      description: Get All AddField
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          properties:
+            page:
+              type: string
+            perPage:
+              type: string
+            search:
+              type: string
+      responses:
+        200:
+          description: Success
+
+#AdSetting Get By applicationMasterId
+  /v1/adSettingId:
+    get:
+      tags: [AdSetting]
+      security:  
+      - JWT: []
+      summary: Get AdSetting by Id 
+      description: Get AdSetting by Id 
+      parameters:
+        - name: applicationMasterId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+#AdSetting Create
+  /v1/adSetting:
+    post:
+      tags: [AdSetting]
+      security:  
+      - JWT: []
+      summary: Create adSetting
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AdSettingRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+definitions:
+  UploadMediaCreateRequest:
+    title: UploadMediaCreateRequest
+    example:
+      uploadMediaCategoryId: 6344f2e347b016b0de2179a5
+      applicationMasterId: 6343ec1b46d185b1a905c525
+      uploadMedia:
+      - uploadMediaImage: string
+        content: string
+      - uploadMediaImage: string
+        content: string
+  AdSettingRequest:
+    title: AdSettingRequest
+    example:
+      customAds:
+        customImageBig: string
+        customImageSmall: string
+        playStoreUrl: string
+        buttonTxt: string
+        descriptionTwoAds: string
+        descriptionOneAds: string
+        appNameAds: string
+      adxFive:
+        appOpen: string
+        native: string
+        banner: string
+        interstitial: string
+        rewarded: string
+      adxFour:
+        appOpen: string
+        native: string
+        banner: string
+        interstitial: string
+        rewarded: string
+      adxThree:
+        appOpen: string
+        native: string
+        banner: string
+        interstitial: string
+        rewarded: string
+      adxTwo:
+        appOpen: string
+        native: string
+        banner: string
+        interstitial: string
+        rewarded: string
+      adxOne:
+        appOpen: string
+        native: string
+        banner: string
+        interstitial: string
+        rewarded: string
+      adsCount:
+        adsFix: boolean
+        interstitial: string
+        rewarded: string
+      firstScreenSetting:
+        intersitialAppOpen: string
+      otherInputFields:
+      - fieldId: 63469989454eb274ef534395
+        fieldName: string
+        value: Any
+      - fieldId: 63469989454eb274ef534396
+        fieldName: string
+        value: Any
+      applicationMasterId: 6343ec1b46d185b1a905c525

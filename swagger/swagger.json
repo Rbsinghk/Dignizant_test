@@ -1,0 +1,342 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Dignizant",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "blog"
+    },
+    {
+      "name": "Comment"
+    }
+  ],
+  "paths": {
+    "/v1/register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "User Registration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "raj",
+                  "email": "raj@gmail.com",
+                  "password": "Rajbir@1001"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "User Login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "raj1@gmail.com",
+                  "password": "Rajbir@1001"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/allblog": {
+      "post": {
+        "tags": ["blog"],
+        "summary": "Get All Blog",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "page": 1,
+                  "perPage": 1
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY1ZDcyMzU2YmJmZDYzZDI0NGVkMWVjZSIsIm5hbWUiOiJyYWoxIiwiZW1haWwiOiJyYWoxQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpc0RlbGV0ZSI6ZmFsc2UsImRhdGUiOiIyMDI0LTAyLTIyVDEwOjM1OjAyLjMyOFoiLCJfX3YiOjB9LCJpYXQiOjE3MDg1OTgxNjV9.o3hLmuO4lmbRY5b-_Ipoe94IX9ZSLqIyob1cEUnQfCY"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/blog": {
+      "get": {
+        "tags": ["blog"],
+        "summary": "Get Blog by Id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY1ZDZmNjQzYzRlMTAxNTM2ZTYzZWE1YiIsIm5hbWUiOiJyYWoiLCJlbWFpbCI6InJhakBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaXNEZWxldGUiOmZhbHNlLCJkYXRlIjoiMjAyNC0wMi0yMlQwNzoyMjo0My40MjZaIiwiX192IjowfSwiaWF0IjoxNzA4NTkwMDcxfQ.hSi7GPee0AX2Lc1-65AJilT5gZ0cEo7adq2f2UscqZ0"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "65d704ab338861a3f3e16a6"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/blogCreate": {
+      "post": {
+        "tags": ["blog"],
+        "summary": "Create Blog",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "content": {
+                    "type": "string",
+                    "example": "new content"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "YOYO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY1ZDZmNjQzYzRlMTAxNTM2ZTYzZWE1YiIsIm5hbWUiOiJyYWoiLCJlbWFpbCI6InJhakBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaXNEZWxldGUiOmZhbHNlLCJkYXRlIjoiMjAyNC0wMi0yMlQwNzoyMjo0My40MjZaIiwiX192IjowfSwiaWF0IjoxNzA4NTg2NzM5fQ.73yFUIwHgadToh-7fthmq_lK5MkAC1LAp15d5qU45ME"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/blogUpdate": {
+      "post": {
+        "tags": ["blog"],
+        "summary": "Update Blog",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "65d738739b9628dcee9f44e9"
+                  },
+                  "content": {
+                    "type": "string",
+                    "example": "new content 123"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "MMMMM"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY1ZDZmNjQzYzRlMTAxNTM2ZTYzZWE1YiIsIm5hbWUiOiJyYWoiLCJlbWFpbCI6InJhakBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaXNEZWxldGUiOmZhbHNlLCJkYXRlIjoiMjAyNC0wMi0yMlQwNzoyMjo0My40MjZaIiwiX192IjowfSwiaWF0IjoxNzA4NTg2NzM5fQ.73yFUIwHgadToh-7fthmq_lK5MkAC1LAp15d5qU45ME"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/blogDelete": {
+      "delete": {
+        "tags": ["blog"],
+        "summary": "Delete Blog",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY1ZDZmNjQzYzRlMTAxNTM2ZTYzZWE1YiIsIm5hbWUiOiJyYWoiLCJlbWFpbCI6InJhakBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaXNEZWxldGUiOmZhbHNlLCJkYXRlIjoiMjAyNC0wMi0yMlQwNzoyMjo0My40MjZaIiwiX192IjowfSwiaWF0IjoxNzA4NTg2NzM5fQ.73yFUIwHgadToh-7fthmq_lK5MkAC1LAp15d5qU45ME"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/commentCreate": {
+      "post": {
+        "tags": ["Comment"],
+        "summary": "Create Comment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "blogId": "65d704ab338861a3f3e16a66",
+                  "content": "Pranshant YOYO"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY1ZDZmNjQzYzRlMTAxNTM2ZTYzZWE1YiIsIm5hbWUiOiJyYWoiLCJlbWFpbCI6InJhakBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaXNEZWxldGUiOmZhbHNlLCJkYXRlIjoiMjAyNC0wMi0yMlQwNzoyMjo0My40MjZaIiwiX192IjowfSwiaWF0IjoxNzA4NTkwMDcxfQ.hSi7GPee0AX2Lc1-65AJilT5gZ0cEo7adq2f2UscqZ0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/getAllComment": {
+      "post": {
+        "tags": ["Comment"],
+        "summary": "Get All Comment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "blogId": "65d704ab338861a3f3e16a66",
+                  "perPage": 1,
+                  "page": 2
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY1ZDZmNjQzYzRlMTAxNTM2ZTYzZWE1YiIsIm5hbWUiOiJyYWoiLCJlbWFpbCI6InJhakBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaXNEZWxldGUiOmZhbHNlLCJkYXRlIjoiMjAyNC0wMi0yMlQwNzoyMjo0My40MjZaIiwiX192IjowfSwiaWF0IjoxNzA4NTkwMDcxfQ.hSi7GPee0AX2Lc1-65AJilT5gZ0cEo7adq2f2UscqZ0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
